@@ -1,0 +1,42 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: Esteban1102
+      MYSQL_DATABASE: ambiefacBd
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - my_network
+
+  spring-app:
+    image: estsban1102/backendappambiefac-spring-app:1.0.3
+    container_name: spring-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+
+#docker run -d -p 8080:80 --name spring-container
+#docker run -d -p 3306:3306 --name db-ambiefac -e MYSQL_ROOT_PASSWORD=Esteban1102
+#docker run -d -p 3306:3306 --name db-ambiefac -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql
+#docker run -d -p 3306:3306 --name db-ambiefac -e MYSQsL_RANDOM_ROOT_PASSWORD=true mysql
+#docker run -d --name my-mysql-container -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Esteban1102 mysql
+#docker exec -it m mysql mysql -u admin -p
+#docker run -d --name mysql-container -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Esteban1102 mysql:latest
+
+
+#ssh -i ambiefac-vm.pem ambiefacapp@172.208.53.11
